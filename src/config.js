@@ -1,6 +1,6 @@
 import {config} from 'dotenv'
 config();
-console.log(process.env.NICK)
+console.log( 'Cordial Saludo', process.env.PORT)
 export default {
-    port: 4000
+    port: process.env.PORT || 3000
 }
