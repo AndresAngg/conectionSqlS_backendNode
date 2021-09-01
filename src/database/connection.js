@@ -1,10 +1,11 @@
 import sql from 'mssql' // Se importa el modulo
+import config from '../config'
 
 const settings = { //Se configura la coneccion
-    user: 'andre',
-    password: 'qwerty',
-    server: 'localhost',
-    database: 'inmueble',
+    user: config.userdb,
+    password: config.password,
+    server: config.server,
+    database: config.database,
     options: {
         encrypt: true, // for azure
         trustServerCertificate: true // change to true for local dev / self-signed certs

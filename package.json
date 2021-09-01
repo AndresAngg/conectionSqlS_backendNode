@@ -2,11 +2,10 @@
   "name": "ConectSqlServerNodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
+  "main": "index.js",  "scripts": {
     "dev": "nodemon src/index.js --exec babel-node",
-    "build": "babel src -d build",
-    "start": "node build"
+    "build": "babel src -d dist",
+    "start": "node dist"
   },
   "keywords": [],
   "author": "",

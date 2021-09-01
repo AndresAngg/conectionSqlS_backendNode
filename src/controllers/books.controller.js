@@ -93,7 +93,7 @@ export const updateBook = async (req, res) => {
         .input("pais", pais)
         .input("id", id)
         .query(querys.updateBook)
-
+        
        return res.json({
 
             message: 'Se actualizó correctamente',
