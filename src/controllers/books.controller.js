@@ -75,28 +75,33 @@ export const deleteBook = async (req, res) => {
 }
 
 export const updateBook = async (req, res) => {
-    const { titulo, autor, years, genero, editor, pais } = req.body
-    const { id } = req.params;
-    if(titulo == null || autor == null || years == null || genero == null || editor == null || pais == null){
+    try{
+        const { titulo, autor, years, genero, editor, pais } = req.body
+        const { id } = req.params;
+        if(titulo == null || autor == null || years == null || genero == null || editor == null || pais == null){
 
-            console.error('No llenaste todos los campos')
-            return res.status(400).json({ message: 'Porfa llena los campos' })
-    }
-    const pool = await getConnection();
-    const consulta = await pool.request()
-    .input("titulo", titulo)
-    .input("autor", autor)
-    .input("years", years)
-    .input("genero", genero)
-    .input("editor", editor)
-    .input("pais", pais)
-    .input("id", id)
-    .query(querys.updateBook)
+                console.error('No llenaste todos los campos')
+                return res.status(400).json({ message: 'Porfa llena los campos' })
+        }
+        const pool = await getConnection();
+        const consulta = await pool.request()
+        .input("titulo", titulo)
+        .input("autor", autor)
+        .input("years", years)
+        .input("genero", genero)
+        .input("editor", editor)
+        .input("pais", pais)
+        .input("id", id)
+        .query(querys.updateBook)
 
-   return res.json({
+       return res.json({
 
-        message: 'Se actualizó correctamente',
-    })
+            message: 'Se actualizó correctamente',
+        })
 
     
+    }catch(error){
+        console.log(error)
+        res.status(500)
+    }
 }
