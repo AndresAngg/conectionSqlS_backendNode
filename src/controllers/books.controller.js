@@ -1,5 +1,29 @@
 import { getConnection, sql, querys } from '../database'
 
+const reqForCreateBook  = async (ti, aut, year, gene, edit, pa, respon) =>{
+
+    if (ti == null || aut == null || year == null || gene == null || edit == null || pa == null) {
+        console.error('No llenaste todos los campos')
+        return respon.status(400).json({ message: 'Porfa llena los campos' })
+    } else {
+        const pool = await getConnection();
+        await pool.request()
+            .input("titulo", sql.VarChar, ti)
+            .input("autor", sql.VarChar, aut)
+            .input("years", sql.Int, year)
+            .input("genero", sql.VarChar, gene)
+            .input("editor", sql.VarChar, edit)
+            .input("pais", sql.VarChar, pa)
+            .query(querys.booksCreate)
+        respon.json({
+            message: 'El libro se añadió correctamente',
+
+            body: {
+                book: { ti, aut, year, gene, edit, pa }
+            }
+        })
+    }
+}
 
 
 export const getBooks = async (req, res) => {
@@ -19,27 +43,8 @@ export const createBook = async (req, res) => {
     try {
         const { titulo, autor, years, genero, editor, pais } = req.body
 
-        if (titulo == null || autor == null || years == null || genero == null || editor == null || pais == null) {
-            console.error('No llenaste todos los campos')
-            return res.status(400).json({ message: 'Porfa llena los campos' })
-        } else {
-            const pool = await getConnection();
-            await pool.request()
-                .input("titulo", sql.VarChar, titulo)
-                .input("autor", sql.VarChar, autor)
-                .input("years", sql.Int, years)
-                .input("genero", sql.VarChar, genero)
-                .input("editor", sql.VarChar, editor)
-                .input("pais", sql.VarChar, pais)
-                .query(querys.booksCreate)
-            res.json({
-                message: 'El libro se añadió correctamente',
-
-                body: {
-                    book: { titulo, autor, years, genero, editor, pais }
-                }
-            })
-        }
+        reqForCreateBook(titulo, autor, years, genero, editor, pais, res)
+        
     } catch (error) {
         console.log(error)
         res.status(500)
